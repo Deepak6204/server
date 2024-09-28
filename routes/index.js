@@ -12,9 +12,6 @@ const { updateScore } = require('../controllers/score_time.js');
 const users = require('../controllers/get_users.js');
 const { is_eligible } = require('../controllers/is_eligible.js');
 
-router.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/home.html');
-});
 
 router.use(cors());
 router.get('/problems', problemsController.getProblems);
