@@ -29,7 +29,7 @@ const handleSubmit = async (req, res) => {
     const data = { firebaseId, selectedRound, score, elapsed_time };
 
     try {
-      const response = await fetch('http://localhost:5000/update-score', {
+      const response = await fetch('https://server-jt5f.onrender.com/update-score', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
