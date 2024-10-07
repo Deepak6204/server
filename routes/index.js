@@ -11,6 +11,7 @@ const userController = require('../controllers/create_user.js');
 const { updateScore } = require('../controllers/score_time.js');
 const users = require('../controllers/get_users.js');
 const { is_eligible } = require('../controllers/is_eligible.js');
+const { setRound1Eligible ,setRound2EligibleForTop60,setRound3EligibleForTop30} = require('../controllers/set_eligible.js');
 
 
 router.use(cors());
@@ -24,5 +25,7 @@ router.post('/api/users', userController.loginUser);
 router.post('/update-score', updateScore);
 router.get('/get_users', users.getAllUsers);
 router.post('/is_eligible', is_eligible)
-
+router.put('/round1/eligible/abcd1234', setRound1Eligible);
+router.put('/round2/eligible/abcd1234', setRound2EligibleForTop60);
+router.put('/round3/eligible/abcd1234', setRound3EligibleForTop30);
 module.exports = router;
