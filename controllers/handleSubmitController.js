@@ -25,7 +25,7 @@ const handleSubmit = async (req, res) => {
 
     let score = correctBugs.length * 10; 
 
-    score -= (missedBugs.length + incorrectBugs.length) * 12;
+    score -= (incorrectBugs.length) * 2;
     if(final_submit){
       const data = { firebaseId, selectedRound, score, elapsed_time };
 
