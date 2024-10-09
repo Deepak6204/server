@@ -24,7 +24,7 @@ const handleSubmit = async (req, res) => {
     const missedBugs = allBugLines.filter(bugId => !selectedBugs.includes(bugId));
     const incorrectBugs = selectedBugs.filter(bugId => !allBugLines.includes(bugId));
 
-    score = correctBugs.length * 10; 
+    score += correctBugs.length * 10; 
 
     score -= (incorrectBugs.length) * 2;
     if(final_submit){
