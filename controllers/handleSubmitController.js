@@ -11,7 +11,7 @@ const searchLinesWithBugs = (question, bugIds) => {
 
 const handleSubmit = async (req, res) => {
   try {
-    const { selectedQuestion, selectedBugs , elapsed_time,selectedRound,firebaseId} = req.body;
+    const { selectedQuestion, selectedBugs , elapsed_time,selectedRound,firebaseId, final_submit} = req.body;
     
     const allBugLines = selectedQuestion.code
       .map((line, index) => (line.hasBug ? index : null))
@@ -26,33 +26,35 @@ const handleSubmit = async (req, res) => {
     let score = correctBugs.length * 10; 
 
     score -= (missedBugs.length + incorrectBugs.length) * 12;
-    const data = { firebaseId, selectedRound, score, elapsed_time };
+    if(final_submit){
+      const data = { firebaseId, selectedRound, score, elapsed_time };
 
-    try {
-      const response = await fetch('https://server-jt5f.onrender.com/update-score', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data), // Send the data as JSON
-      });
+      try {
+        const response = await fetch('https://server-jt5f.onrender.com/update-score', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data), // Send the data as JSON
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (response.ok) {
-        console.log('Score updated successfully:', result);
-      } else {
-        console.error('Error updating score:', result.message);
+        if (response.ok) {
+          console.log('Score updated successfully:', result);
+        } else {
+          console.error('Error updating score:', result.message);
+        }
+      } catch (error) {
+        console.error('Error in request:', error);
       }
-    } catch (error) {
-      console.error('Error in request:', error);
-    }
 
-    // console.log("Correct Bugs:", correctBugs);
-    // console.log("Missed Bugs:", missedBugs);
-    // console.log("Incorrect Selections:", incorrectBugs);
-    // console.log("Final Score:", score);
-    // console.log("final time:", elapsed_time)
+      console.log("Correct Bugs:", correctBugs);
+      console.log("Missed Bugs:", missedBugs);
+      console.log("Incorrect Selections:", incorrectBugs);
+      console.log("Final Score:", score);
+      console.log("final time:", elapsed_time)
+    }
 
     res.json({
       selectedBugs,
@@ -60,6 +62,7 @@ const handleSubmit = async (req, res) => {
       missedBugs,
       incorrectBugs,
       linesWithBugs,
+      elapsed_time,
       score
     });
   } catch (error) {
