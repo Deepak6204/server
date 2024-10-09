@@ -11,7 +11,7 @@ const searchLinesWithBugs = (question, bugIds) => {
 
 const handleSubmit = async (req, res) => {
   try {
-    const { selectedQuestion, selectedBugs , elapsed_time,selectedRound,firebaseId, final_submit} = req.body;
+    const { selectedQuestion, selectedBugs , elapsed_time,selectedRound,firebaseId, final_submit,score} = req.body;
     
     const allBugLines = selectedQuestion.code
       .map((line, index) => (line.hasBug ? index : null))
@@ -20,10 +20,11 @@ const handleSubmit = async (req, res) => {
     const linesWithBugs = searchLinesWithBugs(selectedQuestion, selectedBugs);
 
     const correctBugs = selectedBugs.filter(bugId => allBugLines.includes(bugId));
+    console.log(correctBugs)
     const missedBugs = allBugLines.filter(bugId => !selectedBugs.includes(bugId));
     const incorrectBugs = selectedBugs.filter(bugId => !allBugLines.includes(bugId));
 
-    let score = correctBugs.length * 10; 
+    score = correctBugs.length * 10; 
 
     score -= (incorrectBugs.length) * 2;
     if(final_submit){
