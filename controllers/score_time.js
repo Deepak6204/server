@@ -2,14 +2,14 @@ const User = require('../models/user');
 
 const updateScore = async (req, res) => {
   console.log(req.body)
-  const { firebaseId, selectedRound, score, elapsed_time } = req.body;
+  const { firebaseId, selectedRound, currscore, elapsed_time } = req.body;
   console.log("a: ",firebaseId)
   console.log("a: ",selectedRound)
-  console.log("a: ",score)
+  console.log("a: ",currscore)
   console.log("a: ",elapsed_time)
 
-  if (!firebaseId || !selectedRound || score === undefined || elapsed_time === undefined) {
-    return res.status(400).json({ message: 'Invalid input. Please provide firebaseId, selectedRound, score, and elapsed_time.' });
+  if (!firebaseId || !selectedRound || currscore === undefined || elapsed_time === undefined) {
+    return res.status(400).json({ message: 'Invalid input. Please provide firebaseId, selectedRound, currscore, and elapsed_time.' });
   }
   try {
     // Find the user by Firebase ID
@@ -19,13 +19,13 @@ const updateScore = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Check if the score for the selectedRound has already been set
-    // if (user.scores[selectedRound].score !== null) {
-    //   return res.status(400).json({ message: `Score for selectedRound ${selectedRound} has already been submitted. Only one attempt is allowed.` });
+    // Check if the currscore for the selectedRound has already been set
+    // if (user.scores[selectedRound].currscore !== null) {
+    //   return res.status(400).json({ message: `currscore for selectedRound ${selectedRound} has already been submitted. Only one attempt is allowed.` });
     // }
 
-    // Update score and elapsed_time for the specified selectedRound if it's the first attempt
-    user.scores[selectedRound].score += score;
+    // Update currscore and elapsed_time for the specified selectedRound if it's the first attempt
+    user.scores[selectedRound].score += currscore;
     user.scores[selectedRound].time = elapsed_time;
     user.scores[selectedRound].attempted = true;
 

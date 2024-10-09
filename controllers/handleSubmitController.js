@@ -23,12 +23,12 @@ const handleSubmit = async (req, res) => {
     console.log(correctBugs)
     const missedBugs = allBugLines.filter(bugId => !selectedBugs.includes(bugId));
     const incorrectBugs = selectedBugs.filter(bugId => !allBugLines.includes(bugId));
+    let currscore = score
+    currscore += correctBugs.length * 10; 
 
-    score += correctBugs.length * 10; 
-
-    score -= (incorrectBugs.length) * 2;
+    currscore -= (incorrectBugs.length) * 2;
     if(final_submit){
-      const data = { firebaseId, selectedRound, score, elapsed_time };
+      const data = { firebaseId, selectedRound, currscore, elapsed_time };
 
       try {
         const response = await fetch('https://server-jt5f.onrender.com/update-score', {
@@ -64,7 +64,7 @@ const handleSubmit = async (req, res) => {
       incorrectBugs,
       linesWithBugs,
       elapsed_time,
-      score
+      currscore
     });
   } catch (error) {
     console.error('Error:', error);
