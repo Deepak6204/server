@@ -24,12 +24,29 @@ const handleSubmit = async (req, res) => {
     const missedBugs = allBugLines.filter(bugId => !selectedBugs.includes(bugId));
     const incorrectBugs = selectedBugs.filter(bugId => !allBugLines.includes(bugId));
 
-    score += (correctBugs.length * 10); 
+    score += (correctBugs.length * 10);
 
     score -= (incorrectBugs.length * 2);
     if(final_submit){
       const data = { firebaseId, selectedRound, score, elapsed_time };
-
+      try {
+        const response = await fetch('https://server-jt5f.onrender.com/is_eligible', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ round,firebaseId}),
+      });
+  
+      const result = await response.json();
+  
+      if(result.attempt === false){
+        res.status(200).JSON({ message: 'User already participated' })
+        return 0;
+      }
+    } catch {
+      setLoading(false);
+    }
       try {
         const response = await fetch('https://server-jt5f.onrender.com/update-score', {
           method: 'POST',
