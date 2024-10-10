@@ -7,7 +7,6 @@ const is_eligible = async (req, res) => {
     const users = await User.find({firebaseId});
 
     // Check if there are any users in the database
-    console.log(users[0].scores)
     if (users.length === 0) {
       return res.status(404).json({ message: 'No users found' });
     }

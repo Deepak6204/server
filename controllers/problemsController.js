@@ -7,7 +7,6 @@ exports.getProblems = (req, res) => {
       return res.status(500).send('Error reading JSON file');
     }
     res.setHeader('Content-Type', 'application/json');
-    console.log(data)
     res.send(data);
   });
 };

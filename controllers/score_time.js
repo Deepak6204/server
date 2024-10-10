@@ -1,12 +1,7 @@
 const User = require('../models/user');
 
 const updateScore = async (req, res) => {
-  console.log(req.body)
   const { firebaseId, selectedRound, score, elapsed_time } = req.body;
-  console.log("a: ",firebaseId)
-  console.log("a: ",selectedRound)
-  console.log("a: ",score)
-  console.log("a: ",elapsed_time)
 
   if (!firebaseId || !selectedRound || score === undefined || elapsed_time === undefined) {
     return res.status(400).json({ message: 'Invalid input. Please provide firebaseId, selectedRound, score, and elapsed_time.' });

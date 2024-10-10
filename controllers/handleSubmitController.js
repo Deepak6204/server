@@ -20,7 +20,6 @@ const handleSubmit = async (req, res) => {
     const linesWithBugs = searchLinesWithBugs(selectedQuestion, selectedBugs);
 
     const correctBugs = selectedBugs.filter(bugId => allBugLines.includes(bugId));
-    console.log(correctBugs)
     const missedBugs = allBugLines.filter(bugId => !selectedBugs.includes(bugId));
     const incorrectBugs = selectedBugs.filter(bugId => !allBugLines.includes(bugId));
 
@@ -66,11 +65,6 @@ const handleSubmit = async (req, res) => {
         console.error('Error in request:', error);
       }
 
-      console.log("Correct Bugs:", correctBugs);
-      console.log("Missed Bugs:", missedBugs);
-      console.log("Incorrect Selections:", incorrectBugs);
-      console.log("Final Score:", score);
-      console.log("final time:", elapsed_time)
     }
 
     res.json({

@@ -18,13 +18,11 @@ const handleSubmit = async (req, res) => {
 
     // if (selectedBugs.length !== 0) {
       const linesWithBugs = searchLinesWithBugs(selectedQuestion, selectedBugs);
-      console.log("These are the final lines with bugs:", linesWithBugs);
 
       let score = linesWithBugs.length * 10;
       if (selectedBugs.length !== linesWithBugs.length) {
         score -= Math.abs(selectedBugs.length - linesWithBugs.length) * 12;
       }
-      console.log("Score:", score);
 
       res.json({
         selectedBugs,
