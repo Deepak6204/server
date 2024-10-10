@@ -45,7 +45,6 @@ const handleSubmit = async (req, res) => {
         return 0;
       }
     } catch {
-      setLoading(false);
     }
       try {
         const response = await fetch('https://server-jt5f.onrender.com/update-score', {
